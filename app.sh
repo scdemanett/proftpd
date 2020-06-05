@@ -1,6 +1,6 @@
 ### ZLIB ###
 _build_zlib() {
-local VERSION="1.2.8"
+local VERSION="1.2.11"
 local FOLDER="zlib-${VERSION}"
 local FILE="${FOLDER}.tar.gz"
 local URL="http://zlib.net/${FILE}"
@@ -16,15 +16,13 @@ popd
 
 ### OPENSSL ###
 _build_openssl() {
-local VERSION="1.0.2d"
+local VERSION="1.1.1g"
 local FOLDER="openssl-${VERSION}"
 local FILE="${FOLDER}.tar.gz"
-local URL="http://mirror.switch.ch/ftp/mirror/openssl/source/${FILE}"
+local URL="http://www.openssl.org/source/${FILE}"
 
 _download_tgz "${FILE}" "${URL}" "${FOLDER}"
-cp -vf "src/${FOLDER}-parallel-build.patch" "target/${FOLDER}/"
 pushd "target/${FOLDER}"
-patch -p1 -i "${FOLDER}-parallel-build.patch"
 ./Configure --prefix="${DEPS}" --openssldir="${DEST}/etc/ssl" \
   zlib-dynamic --with-zlib-include="${DEPS}/include" --with-zlib-lib="${DEPS}/lib" \
   shared threads linux-armv4 -DL_ENDIAN ${CFLAGS} ${LDFLAGS} \
@@ -32,11 +30,9 @@ patch -p1 -i "${FOLDER}-parallel-build.patch"
 sed -i -e "s/-O3//g" Makefile
 make
 make install_sw
-mkdir -p "${DEST}/libexec"
-cp -vfa "${DEPS}/bin/openssl" "${DEST}/libexec/"
 cp -vfa "${DEPS}/lib/libssl.so"* "${DEST}/lib/"
 cp -vfa "${DEPS}/lib/libcrypto.so"* "${DEST}/lib/"
-cp -vfaR "${DEPS}/lib/engines" "${DEST}/lib/"
+cp -vfaR "${DEPS}/lib/engines-1.1" "${DEST}/lib/"
 cp -vfaR "${DEPS}/lib/pkgconfig" "${DEST}/lib/"
 rm -vf "${DEPS}/lib/libcrypto.a" "${DEPS}/lib/libssl.a"
 sed -e "s|^libdir=.*|libdir=${DEST}/lib|g" -i "${DEST}/lib/pkgconfig/libcrypto.pc"
@@ -46,7 +42,7 @@ popd
 
 ### SQLITE ###
 _build_sqlite() {
-local VERSION="3081101"
+local VERSION="3320200"
 local FOLDER="sqlite-autoconf-${VERSION}"
 local FILE="${FOLDER}.tar.gz"
 local URL="http://sqlite.org/$(date +%Y)/${FILE}"
@@ -63,10 +59,10 @@ popd
 
 ### MYSQL-CONNECTOR ###
 _build_mysql() {
-local VERSION="6.1.5"
-local FOLDER="mysql-connector-c-${VERSION}-src"
+local VERSION="8.0.20"
+local FOLDER="mysql-connector-c++-${VERSION}-src"
 local FILE="${FOLDER}.tar.gz"
-local URL="http://cdn.mysql.com/Downloads/Connector-C/${FILE}"
+local URL="http://cdn.mysql.com/Downloads/Connector-C++/${FILE}"
 export FOLDER_LOCAL="${PWD}/target/${FOLDER}-local"
 
 _download_tgz "${FILE}" "${URL}" "${FOLDER}"
@@ -117,7 +113,7 @@ popd
 
 ### PROFTPD ###
 _build_proftpd() {
-local VERSION="1.3.5a"
+local VERSION="1.3.7rc4"
 local FOLDER="proftpd-${VERSION}"
 local FILE="${FOLDER}.tar.gz"
 local URL="ftp://ftp.proftpd.org/distrib/source/${FILE}"
