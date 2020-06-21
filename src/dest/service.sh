@@ -7,7 +7,7 @@
 
 framework_version="2.1"
 name="proftpd"
-version="1.3.5a-1"
+version="1.3.7rc4"
 description="Highly configurable FTP server software"
 depends=""
 webui="WebUI"
