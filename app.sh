@@ -59,7 +59,7 @@ popd
 
 ### MYSQL-CONNECTOR ###
 _build_mysql() {
-local VERSION="8.0.20"
+local VERSION="8.0.15"
 local FOLDER="mysql-connector-c++-${VERSION}-src"
 local FILE="${FOLDER}.tar.gz"
 local URL="http://cdn.mysql.com/Downloads/Connector-C++/${FILE}"
