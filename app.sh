@@ -59,10 +59,10 @@ popd
 
 ### MYSQL-CONNECTOR ###
 _build_mysql() {
-local VERSION="8.0.15"
-local FOLDER="mysql-connector-c++-${VERSION}-src"
+local VERSION="6.1.11"
+local FOLDER="mysql-connector-c-${VERSION}-src"
 local FILE="${FOLDER}.tar.gz"
-local URL="https://downloads.mysql.com/archives/get/p/20/file/${FILE}"
+local URL="https://downloads.mysql.com/archives/get/p/19/file/${FILE}"
 export FOLDER_LOCAL="${PWD}/target/${FOLDER}-local"
 
 _download_tgz "${FILE}" "${URL}" "${FOLDER}"
